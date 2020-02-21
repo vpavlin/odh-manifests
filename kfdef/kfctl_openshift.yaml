@@ -1,0 +1,35 @@
+
+apiVersion: kfdef.apps.kubeflow.org/v1beta1
+kind: KfDef
+metadata:
+  name: opendatahub
+  namespace: opendatahub
+spec:
+  applications:
+  - kustomizeConfig:
+      parameters:
+      - name: namespace
+        value: openshift-operators
+      repoRef:
+        name: odh-manifests
+        path: istio/servicemesh-cluster
+    name: servicemesh-cluster
+  - kustomizeConfig:
+      parameters:
+      - name: namespace
+        value: istio-system
+      repoRef:
+        name: odh-manifests
+        path: istio/servicemesh-controlplane
+    name: servicemesh-control-plane
+  - kustomizeConfig:
+      repoRef:
+        name: odh-manifests
+        path: istio/servicemesh
+    name: servicemesh
+  repos:
+  - name: manifests
+    uri: /home/vpavlin/devel/github.com/vpavlin/manifests
+  - name: odh-manifests
+    uri: /home/vpavlin/devel/github.com/vpavlin/odh-manifests
+  version: v0.7-branch-openshift
