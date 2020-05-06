@@ -1,0 +1,58 @@
+# {{ name }}
+
+<!-- TODO Provide a high level description of the component -->
+
+Link: [{{ name }}](http://{{name}}.com)
+
+{% for component in components %}
+1. [{{ component.name }}](#{{ component.name}}){% endfor %}
+
+{% for component in components %}
+## {{ component.name }}
+
+<!-- TODO Provide a description for the component {{ component.name }} -->
+
+### Parameters
+{%  if component.parameters | count > 0 %}
+Component {{ component.name }} comes with {{ component.parameters | count }} parameters exposed vie KFDef.
+{% for parameter in component.parameters %}
+#### {{ parameter.name }}
+
+<!-- TODO Provide a description for the parameter {{ parameter.name }} -->
+{% endfor %}
+{% else %}
+Component {{ component.name }} does not provide any parameters.
+{% endif %}
+
+### Overlays
+{%  if component.overlays | count > 0 %}
+Component {{ component.name }} comes with {{ component.overlays | count }} overlays.
+{% for overlay in component.overlays %}
+#### {{ overlay.name }}
+
+<!-- TODO Provide a description for the overlay {{ overlay.name }} -->
+{% endfor %}
+{% else %}
+Component {{ component.name }} does not provide any overlays.
+{% endif %}
+{% endfor %}
+
+## KFdef Example
+
+<!-- TODO Review the following generated snippet and make sure it provides a good example -->
+
+```
+{% for component in components %}
+- kustomizeConfig:{% if component.overlays | count > 0 %}
+    overlays:
+    {% for overlay in component.overlays %}- {{ overlay.name }}
+    {% endfor %}{% endif %}{% if component.parameters | count > 0 %}
+    parameters:{% for parameter in component.parameters %}
+    - name: {{ parameter.name }}
+      value: "example_value"{% endfor %}{% endif %}
+    repoRef:
+      name: manifests
+      path: {{ component.path }}
+  name: {{ component.kfdef_name}}
+{% endfor %}
+```
