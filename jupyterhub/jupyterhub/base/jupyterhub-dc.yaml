@@ -86,7 +86,7 @@ spec:
             secretKeyRef:
               name: $(jupyterhub_secret)
               key: CONFIGPROXY_AUTH_TOKEN
-        image: jupyterhub-img:latest
+        image: quay.io/odh-jupyterhub/jupyterhub-img:v0.2.8
         name: jupyterhub
         ports:
         - containerPort: 8080
